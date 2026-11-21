@@ -1,0 +1,155 @@
+Placeholder photography
+=======================
+
+Every photograph here is CC0 / Public Domain Mark, sourced via the
+Openverse API — no attribution required, commercial use fine. Where no
+public-domain photograph matched a slot, the file is a generated gradient
+instead; those are marked below and carry no rights at all.
+
+Either way these are placeholders: replace them with your own photography
+before launch. Provenance for each file follows.
+
+box-veg.jpg
+  Food Eat
+  CC0 1.0
+  https://stocksnap.io/photo/food-eat-RXWC2PDCQQ
+
+event-apple.jpg
+  Red apples wooden basket
+  CC0 1.0
+  https://www.rawpixel.com/image/6034360/photo-image-public-domain-green-wooden
+
+event-harvest.jpg
+  Pumpkin Harvest
+  CC0 1.0
+  https://stocksnap.io/photo/pumpkin-harvest-QPDN2DZ4GJ
+
+event-tour.jpg
+  Tractor Vehicle
+  CC0 1.0
+  https://stocksnap.io/photo/tractor-vehicle-FGB346J1FS
+
+hero-eggs.jpg
+  Free egg image
+  CC0 1.0
+  https://www.rawpixel.com/image/5905256/free-egg-image-public-domain-food-cc0-photo
+
+hero-field.jpg
+  Wine Vineyard
+  CC0 1.0
+  https://stocksnap.io/photo/wine-vineyard-0OMFG21GUB
+
+p-apples.jpg
+  Market Red
+  CC0 1.0
+  https://stocksnap.io/photo/market-red-KVJPKMVUAQ
+
+p-beef.jpg
+  Herd cattle farm field
+  CC0 1.0
+  https://www.rawpixel.com/image/3305571/free-photo-image-animal-beef-cattle
+
+p-beetroot.jpg
+  Garden Vegetables
+  CC0 1.0
+  https://stocksnap.io/photo/garden-vegetables-ALVG3YORUN
+
+p-carrots.jpg
+  Free bunch carrots image
+  CC0 1.0
+  https://www.rawpixel.com/image/5912652/photo-image-public-domain-free-vegetables
+
+p-duck-eggs.jpg
+  Duck nest, eggs
+  CC0 1.0
+  https://www.rawpixel.com/image/9648635/duck-nest-eggs
+
+p-eggs.jpg
+  Free fresh eggs grocery store
+  CC0 1.0
+  https://www.rawpixel.com/image/5927716/photo-image-public-domain-food-white
+
+p-garlic.jpg
+  Fresh Garlic
+  CC0 1.0
+  https://stocksnap.io/photo/fresh-garlic-ZFJEKSUY76
+
+p-honey.jpg
+  Untitled
+  CC0 1.0
+  https://www.rawpixel.com/image/6059721/free-public-domain-cc0-photo
+
+p-honeycomb.jpg
+  Hand holding honeycomb
+  CC0 1.0
+  https://www.rawpixel.com/image/6036209/photo-image-public-domain-hand-bee
+
+p-kale.jpg
+  Kale Vegetables
+  CC0 1.0
+  https://stocksnap.io/photo/kale-vegetables-D2AF587E86
+
+p-lamb.jpg
+  Sheep Grazing
+  CC0 1.0
+  https://stocksnap.io/photo/sheep-grazing-FPGDGF6KOV
+
+p-leeks.jpg
+  Leek vegetable
+  CC0 1.0
+  https://www.rawpixel.com/image/6035667/leek-vegetable-free-public-domain-cc0-photo
+
+p-potatoes.jpg
+  Free close potato bag image
+  CC0 1.0
+  https://www.rawpixel.com/image/5922474/photo-image-public-domain-nature-food
+
+p-sausages.jpg
+  Red sausage white sausage
+  CC0 1.0
+  https://www.rawpixel.com/image/3338263/free-photo-image-barbeque-bbq-cc0
+
+p-squash.jpg
+  Squash & pumpkins, homegrown vegetable
+  CC0 1.0
+  https://www.rawpixel.com/image/8731985/photo-image-plant-public-domain-women-ag
+
+p-tomatoes.jpg
+  Fresh Tomatoes
+  CC0 1.0
+  https://stocksnap.io/photo/fresh-tomatoes-EU5M1SOPFC
+
+pyo-rows.jpg
+  Field of Strawberry Plants
+  CC0 1.0
+  https://www.rawpixel.com/image/6075295/field-strawberry-plants
+
+pyo-strawberries.jpg
+  Green Leaves
+  CC0 1.0
+  https://stocksnap.io/photo/green-leaves-7VCDY8GEKX
+
+shop-crates.jpg
+  Fruits & vegetables
+  CC0 1.0
+  https://www.rawpixel.com/image/6037432/fruits-vegetables-free-public-domain-cc0-photo
+
+shop-hero.jpg
+  Halloween Pumpkins
+  CC0 1.0
+  https://stocksnap.io/photo/halloween-pumpkins-W014VVTLFE
+
+story-barn.jpg
+  Barn Farm
+  CC0 1.0
+  https://stocksnap.io/photo/barn-farm-685E8DF2CE
+
+story-orchard.jpg
+  Orchard Tree
+  CC0 1.0
+  https://stocksnap.io/photo/orchard-tree-EAH4WZ6XDN
+
+visit-hero.jpg
+  Wood Fence
+  CC0 1.0
+  https://stocksnap.io/photo/wood-fence-UOOZ8X87MB
