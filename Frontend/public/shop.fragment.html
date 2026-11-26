@@ -72,39 +72,103 @@
 </div>
 </div>
 <!-- ============================ HEADER ============================ -->
+<!-- ============================ HEADER ============================ -->
+
 <header class="site-header" data-sticky-header="">
-<nav aria-label="Main" class="navbar navbar-expand-lg">
-<div class="container">
-<a aria-label="Brookmoor Farm, home" class="brand" href="/">
-<svg aria-hidden="true" class="brand-mark"><use href="#logo"></use></svg>
-<span class="brand-text">
-<span class="brand-name">Brookmoor Farm</span>
-<span class="brand-sub">Farm shop · Veg boxes · Pick your own</span>
-</span>
-</a>
-<div class="header-actions">
-<button aria-controls="basket" aria-label="Open basket, 0 items" class="cart-btn" data-bs-target="#basket" data-bs-toggle="offcanvas" data-cart-link="" type="button">
-<svg aria-hidden="true" class="ico"><use href="#i-basket"></use></svg><span class="cart-count is-empty" data-cart-count="">0</span>
-</button>
-<button aria-controls="main-nav" aria-expanded="false" aria-label="Open menu" class="navbar-toggler" data-bs-target="#main-nav" data-bs-toggle="collapse" type="button">
-<span class="toggler-bar"></span>
-<span class="toggler-bar"></span>
-<span class="toggler-bar"></span>
-</button>
-</div>
-<div class="collapse navbar-collapse" id="main-nav">
-<ul class="navbar-nav">
-<li class="nav-item"><a class="nav-link" data-spy="season" href="/#season">In season</a></li>
-<li class="nav-item"><a class="nav-link" data-spy="boxes" href="/#boxes">Veg boxes</a></li>
-<li class="nav-item"><a class="nav-link" data-spy="pyo" href="/#pyo">Pick your own</a></li>
-<li class="nav-item"><a class="nav-link" data-spy="events" href="/#events">Events</a></li>
-<li class="nav-item"><a aria-current="page" class="nav-link active" href="/shop">Farm shop</a></li>
-<li class="nav-item"><a class="nav-link" href="/visit">Visit</a></li>
-</ul>
-<a class="btn btn-straw nav-cta" href="/#boxes">Order a veg box</a>
-</div>
-</div>
-</nav>
+  <nav aria-label="Main" class="navbar navbar-expand-lg">
+    <div class="container">
+
+      <!-- Logo AgriLink -->
+      <a aria-label="AgriLink, home" class="brand" href="/">
+        <svg aria-hidden="true" class="brand-mark">
+          <use href="#logo"></use>
+        </svg>
+
+        <span class="brand-text">
+          <span class="brand-name">AgriLink</span>
+          <span class="brand-sub">
+            Grow · Connect · Trade · Deliver
+          </span>
+        </span>
+      </a>
+
+      <!-- Basket and mobile menu -->
+      <div class="header-actions">
+
+        <button aria-controls="basket"
+                aria-label="Open basket, 0 items"
+                class="cart-btn"
+                data-bs-target="#basket"
+                data-bs-toggle="offcanvas"
+                data-cart-link=""
+                type="button">
+
+          <svg aria-hidden="true" class="ico">
+            <use href="#i-basket"></use>
+          </svg>
+
+          <span class="cart-count is-empty"
+                data-cart-count="">0</span>
+        </button>
+
+        <button aria-controls="main-nav"
+                aria-expanded="false"
+                aria-label="Open menu"
+                class="navbar-toggler"
+                data-bs-target="#main-nav"
+                data-bs-toggle="collapse"
+                type="button">
+
+          <span class="toggler-bar"></span>
+          <span class="toggler-bar"></span>
+          <span class="toggler-bar"></span>
+        </button>
+
+      </div>
+
+      <!-- Navigation menu -->
+      <div class="collapse navbar-collapse" id="main-nav">
+
+        <ul class="navbar-nav">
+
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link"
+               href="/#boxes">Our Farm</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link"
+               href="/#pyo">Crop Health</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link active"
+               aria-current="page"
+               href="/shop">Farm shop</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link"
+               href="/#events">Deliveries</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link"
+               href="/visit">Community</a>
+          </li>
+
+        </ul>
+
+        <a class="btn btn-straw nav-cta"
+           href="/#boxes">Sign In</a>
+
+      </div>
+    </div>
+  </nav>
 </header>
 <main id="main">
 <!-- ============================ PAGE HERO ============================ -->

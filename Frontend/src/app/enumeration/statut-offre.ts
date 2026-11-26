@@ -1,0 +1,5 @@
+export enum StatutOffre {
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+  RUPTURE_STOCK = 'RUPTURE_STOCK'
+}
