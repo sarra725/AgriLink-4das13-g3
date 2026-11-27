@@ -9,65 +9,50 @@ import java.util.List;
 
 public interface IOffreProduitService {
 
-    // CREATE
     OffreProduitResponse publierOffre(
-            OffreProduitRequest request
-    );
+            OffreProduitRequest request);
 
-    // READ
     List<OffreProduitResponse> getAllOffres();
 
     OffreProduitResponse getOffreById(Long idOffre);
 
-    // UPDATE
     OffreProduitResponse modifierOffre(
             Long idOffre,
-            OffreProduitRequest request
-    );
+            OffreProduitRequest request);
 
-    // DELETE
-    void supprimerOffre(Long idOffre);
+    void supprimerOffre(
+            Long idOffre,
+            Long agriculteurId);
 
-    // Désactivation
-    OffreProduitResponse desactiverOffre(Long idOffre);
+    OffreProduitResponse desactiverOffre(
+            Long idOffre,
+            Long agriculteurId);
 
-    // Activation
-    OffreProduitResponse activerOffre(Long idOffre);
+    OffreProduitResponse activerOffre(
+            Long idOffre,
+            Long agriculteurId);
 
-    // Offres d'un agriculteur
     List<OffreProduitResponse> getOffresByAgriculteur(
-            Long agriculteurId
-    );
+            Long agriculteurId);
 
-    // Filtrer par catégorie
     List<OffreProduitResponse> getOffresByCategorie(
-            CategorieProduit categorie
-    );
+            CategorieProduit categorie);
 
-    // Filtrer par statut
     List<OffreProduitResponse> getOffresByStatut(
-            StatutOffre statut
-    );
+            StatutOffre statut);
 
-    // Recherche
     List<OffreProduitResponse> rechercherOffres(
-            String motCle
-    );
+            String motCle);
 
-    // Offres disponibles
     List<OffreProduitResponse> getOffresDisponibles();
 
-    // Offres disponibles par catégorie
     List<OffreProduitResponse> getOffresDisponiblesByCategorie(
-            CategorieProduit categorie
-    );
+            CategorieProduit categorie);
 
-    // Trier les offres
     List<OffreProduitResponse> trierOffres(String sort);
 
-    // Modifier la quantité disponible
     OffreProduitResponse modifierStock(
             Long idOffre,
-            Double quantite
-    );
+            Long agriculteurId,
+            Double quantite);
 }

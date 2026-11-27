@@ -53,7 +53,7 @@ public class OffreProduit {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "agriculteur_id", nullable = false)
-    private Agriculteur agriculteur;
+    private User agriculteur;
 
     @JsonIgnore
     @OneToMany(mappedBy = "offreProduit")

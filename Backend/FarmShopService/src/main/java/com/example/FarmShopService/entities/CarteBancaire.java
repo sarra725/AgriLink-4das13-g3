@@ -32,5 +32,5 @@ public class CarteBancaire {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "client_id", nullable = false)
-    private Client client;
+    private User client;
 }

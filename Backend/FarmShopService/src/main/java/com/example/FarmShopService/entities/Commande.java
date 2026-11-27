@@ -35,11 +35,11 @@ public class Commande {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "client_id", nullable = false)
-    private Client client;
+    private User client;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "agriculteur_id", nullable = false)
-    private Agriculteur agriculteur;
+    private User agriculteur;
 
     @OneToMany(
             mappedBy = "commande",

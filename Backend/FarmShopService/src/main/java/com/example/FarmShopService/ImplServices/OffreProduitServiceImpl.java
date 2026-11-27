@@ -3,11 +3,12 @@ package com.example.FarmShopService.ImplServices;
 import com.example.FarmShopService.Interfservices.IOffreProduitService;
 import com.example.FarmShopService.dto.OffreProduitRequest;
 import com.example.FarmShopService.dto.OffreProduitResponse;
-import com.example.FarmShopService.entities.Agriculteur;
 import com.example.FarmShopService.entities.OffreProduit;
+import com.example.FarmShopService.entities.User;
 import com.example.FarmShopService.enumeration.CategorieProduit;
 import com.example.FarmShopService.enumeration.StatutOffre;
-import com.example.FarmShopService.repositories.AgriculteurRepository;
+import com.example.FarmShopService.enumeration.Role;
+import com.example.FarmShopService.repositories.UserRepository;
 import com.example.FarmShopService.repositories.OffreProduitRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -28,23 +29,18 @@ public class OffreProduitServiceImpl
 
     private final OffreProduitRepository offreProduitRepository;
 
-    private final AgriculteurRepository agriculteurRepository;
+    private final UserRepository userRepository;
 
-
-    // ==========================================
     // 1. PUBLIER UNE OFFRE
-    // ==========================================
 
     @Override
     public OffreProduitResponse publierOffre(
             OffreProduitRequest request) {
 
-        Agriculteur agriculteur = agriculteurRepository
-                .findById(request.getAgriculteurId())
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND,
-                        "Agriculteur introuvable"
-                ));
+        // Vérifier que l'utilisateur est un agriculteur
+        User agriculteur = verifierAgriculteur(
+                request.getAgriculteurId()
+        );
 
         OffreProduit offre = new OffreProduit();
 
@@ -108,15 +104,11 @@ public class OffreProduitServiceImpl
 
         OffreProduit offre = trouverOffre(idOffre);
 
-        // Interdire le changement du propriétaire
-        if (!offre.getAgriculteur().getId()
-                .equals(request.getAgriculteurId())) {
-
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST,
-                    "Impossible de changer le propriétaire de l'offre"
-            );
-        }
+        // Vérifier le rôle et le propriétaire
+        verifierProprietaire(
+                offre,
+                request.getAgriculteurId()
+        );
 
         remplirOffre(offre, request);
 
@@ -133,9 +125,13 @@ public class OffreProduitServiceImpl
     // ==========================================
 
     @Override
-    public void supprimerOffre(Long idOffre) {
+    public void supprimerOffre(
+            Long idOffre,
+            Long agriculteurId) {
 
         OffreProduit offre = trouverOffre(idOffre);
+
+        verifierProprietaire(offre, agriculteurId);
 
         boolean utiliseeDansCommande =
                 offreProduitRepository
@@ -161,9 +157,13 @@ public class OffreProduitServiceImpl
     // ==========================================
 
     @Override
-    public OffreProduitResponse desactiverOffre(Long idOffre) {
+    public OffreProduitResponse desactiverOffre(
+            Long idOffre,
+            Long agriculteurId) {
 
         OffreProduit offre = trouverOffre(idOffre);
+
+        verifierProprietaire(offre, agriculteurId);
 
         offre.setStatut(StatutOffre.INACTIVE);
 
@@ -178,9 +178,13 @@ public class OffreProduitServiceImpl
     // ==========================================
 
     @Override
-    public OffreProduitResponse activerOffre(Long idOffre) {
+    public OffreProduitResponse activerOffre(
+            Long idOffre,
+            Long agriculteurId) {
 
         OffreProduit offre = trouverOffre(idOffre);
+
+        verifierProprietaire(offre, agriculteurId);
 
         if (offre.getQuantiteDispo() <= 0) {
 
@@ -207,13 +211,7 @@ public class OffreProduitServiceImpl
     public List<OffreProduitResponse> getOffresByAgriculteur(
             Long agriculteurId) {
 
-        if (!agriculteurRepository.existsById(agriculteurId)) {
-
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND,
-                    "Agriculteur introuvable"
-            );
-        }
+        verifierAgriculteur(agriculteurId);
 
         return offreProduitRepository
                 .findByAgriculteurId(agriculteurId)
@@ -265,6 +263,14 @@ public class OffreProduitServiceImpl
     @Transactional(readOnly = true)
     public List<OffreProduitResponse> rechercherOffres(
             String motCle) {
+
+        if (motCle == null || motCle.isBlank()) {
+
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Le mot clé est obligatoire"
+            );
+        }
 
         return offreProduitRepository
                 .findByNomProduitContainingIgnoreCase(motCle)
@@ -323,6 +329,14 @@ public class OffreProduitServiceImpl
     @Transactional(readOnly = true)
     public List<OffreProduitResponse> trierOffres(String sort) {
 
+        if (sort == null) {
+
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Le critère de tri est obligatoire"
+            );
+        }
+
         Sort tri = switch (sort) {
 
             case "price_asc" ->
@@ -363,7 +377,12 @@ public class OffreProduitServiceImpl
     @Override
     public OffreProduitResponse modifierStock(
             Long idOffre,
+            Long agriculteurId,
             Double quantite) {
+
+        OffreProduit offre = trouverOffre(idOffre);
+
+        verifierProprietaire(offre, agriculteurId);
 
         if (quantite == null
                 || !Double.isFinite(quantite)
@@ -375,8 +394,6 @@ public class OffreProduitServiceImpl
             );
         }
 
-        OffreProduit offre = trouverOffre(idOffre);
-
         offre.setQuantiteDispo(quantite);
 
         actualiserStatutStock(offre);
@@ -387,24 +404,104 @@ public class OffreProduitServiceImpl
     }
 
 
-    // ==========================================
-    // METHODES UTILITAIRES PRIVEES
-    // ==========================================
+    // Vérifier l'existence et le rôle de l'utilisateur
+
+    private User verifierAgriculteur(Long agriculteurId) {
+
+        if (agriculteurId == null) {
+
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "L'identifiant de l'agriculteur est obligatoire"
+            );
+        }
+
+        User user = userRepository.findById(agriculteurId)
+                .orElseThrow(() ->
+                        new ResponseStatusException(
+                                HttpStatus.NOT_FOUND,
+                                "Utilisateur introuvable"
+                        )
+                );
+
+        if (user.getRole() != Role.AGRICULTEUR) {
+
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    "Seul un agriculteur peut gérer les offres"
+            );
+        }
+
+        if (!Boolean.TRUE.equals(user.getActif())) {
+
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    "Le compte de cet agriculteur est désactivé"
+            );
+        }
+
+        return user;
+    }
+
+
+    // Vérifier le propriétaire de l'offre
+
+    private void verifierProprietaire(
+            OffreProduit offre,
+            Long agriculteurId) {
+
+        User agriculteur =
+                verifierAgriculteur(agriculteurId);
+
+        if (!offre.getAgriculteur().getId()
+                .equals(agriculteur.getId())) {
+
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    "Cet agriculteur n'est pas le propriétaire de l'offre"
+            );
+        }
+    }
+
+
+    // Rechercher une offre par son identifiant
 
     private OffreProduit trouverOffre(Long idOffre) {
 
         return offreProduitRepository.findById(idOffre)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND,
-                        "Offre introuvable avec l'identifiant : "
-                                + idOffre
-                ));
+                .orElseThrow(() ->
+                        new ResponseStatusException(
+                                HttpStatus.NOT_FOUND,
+                                "Offre introuvable avec l'identifiant : "
+                                        + idOffre
+                        )
+                );
     }
 
+
+    // Remplir les informations de l'offre
 
     private void remplirOffre(
             OffreProduit offre,
             OffreProduitRequest request) {
+
+        if (request.getNomProduit() == null
+                || request.getNomProduit().isBlank()) {
+
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Le nom du produit est obligatoire"
+            );
+        }
+
+        if (request.getPrixUnitaire() == null
+                || request.getPrixUnitaire().signum() <= 0) {
+
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Le prix doit être strictement positif"
+            );
+        }
 
         if (request.getQuantiteDispo() == null
                 || !Double.isFinite(request.getQuantiteDispo())
@@ -413,6 +510,31 @@ public class OffreProduitServiceImpl
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
                     "Quantité invalide"
+            );
+        }
+
+        if (request.getCategorie() == null) {
+
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "La catégorie est obligatoire"
+            );
+        }
+
+        if (request.getQualite() == null) {
+
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "La qualité est obligatoire"
+            );
+        }
+
+        if (request.getUnite() == null
+                || request.getUnite().isBlank()) {
+
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "L'unité est obligatoire"
             );
         }
 
@@ -427,10 +549,12 @@ public class OffreProduitServiceImpl
     }
 
 
+    // Actualiser le statut selon le stock
+
     private void actualiserStatutStock(OffreProduit offre) {
 
-        // Une offre désactivée ou expirée ne doit pas
-        // être réactivée automatiquement.
+        // Ne pas réactiver automatiquement une offre
+        // désactivée ou expirée.
 
         if (offre.getStatut() == StatutOffre.INACTIVE
                 || offre.getStatut() == StatutOffre.EXPIREE) {
@@ -449,7 +573,10 @@ public class OffreProduitServiceImpl
     }
 
 
-    private OffreProduitResponse toResponse(OffreProduit offre) {
+    // Convertir une entité en DTO Response
+
+    private OffreProduitResponse toResponse(
+            OffreProduit offre) {
 
         OffreProduitResponse response =
                 new OffreProduitResponse();

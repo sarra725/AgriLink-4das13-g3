@@ -65,32 +65,43 @@ public class OffreProduitController {
 
 
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{idOffre}")
     public ResponseEntity<Void> supprimerOffre(
-            @PathVariable Long id) {
+            @PathVariable Long idOffre,
+            @RequestParam Long agriculteurId) {
 
-        offreProduitService.supprimerOffre(id);
+        offreProduitService.supprimerOffre(
+                idOffre,
+                agriculteurId
+        );
 
         return ResponseEntity.noContent().build();
     }
 
 
-    @PatchMapping("/{id}/desactiver")
+    @PatchMapping("/{idOffre}/desactiver")
     public ResponseEntity<OffreProduitResponse> desactiverOffre(
-            @PathVariable Long id) {
+            @PathVariable Long idOffre,
+            @RequestParam Long agriculteurId) {
 
         return ResponseEntity.ok(
-                offreProduitService.desactiverOffre(id)
+                offreProduitService.desactiverOffre(
+                        idOffre,
+                        agriculteurId
+                )
         );
     }
 
-
-    @PatchMapping("/{id}/activer")
+    @PatchMapping("/{idOffre}/activer")
     public ResponseEntity<OffreProduitResponse> activerOffre(
-            @PathVariable Long id) {
+            @PathVariable Long idOffre,
+            @RequestParam Long agriculteurId) {
 
         return ResponseEntity.ok(
-                offreProduitService.activerOffre(id)
+                offreProduitService.activerOffre(
+                        idOffre,
+                        agriculteurId
+                )
         );
     }
 
@@ -181,13 +192,18 @@ public class OffreProduitController {
 
 
 
-    @PatchMapping("/{id}/stock")
+    @PatchMapping("/{idOffre}/stock")
     public ResponseEntity<OffreProduitResponse> modifierStock(
-            @PathVariable Long id,
+            @PathVariable Long idOffre,
+            @RequestParam Long agriculteurId,
             @RequestParam Double quantite) {
 
         return ResponseEntity.ok(
-                offreProduitService.modifierStock(id, quantite)
+                offreProduitService.modifierStock(
+                        idOffre,
+                        agriculteurId,
+                        quantite
+                )
         );
     }
 }
